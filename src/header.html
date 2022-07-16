@@ -16,13 +16,39 @@
     }
 
     /* no useful */
-    .card {
-      border-radius: 0.4em;
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-content: center;
 
       background-color: hsla(0, 0%, 100%, 0.04);
-      box-shadow: 0 0 0 1em hsla(0, 0%, 0%, 0.04);
+      box-shadow: 0 0 0 0.4em hsla(0, 0%, 0%, 0.04);
 
       overflow: hidden;
+    }
+
+    .theme__toggle-btn {
+      border: none;
+
+      background-color: hsla(0, 0%, 0%, 0);
+    }
+
+    .theme__toggle-btn>* {
+      vertical-align: middle;
+    }
+
+    .theme__icon {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+
+    .theme__icon--dark {
+      background-image: url('https://cdn-icons-png.flaticon.com/512/6714/6714978.png');
     }
 
     .card__info {
@@ -41,7 +67,12 @@
 
 <body>
   <header class="header-container">
+    <h1 class="header__title">Where in the world?</h1>
 
+    <button type="button" class="theme__toggle-btn">
+      <span class="theme__icon theme__icon--dark"></span>
+      <span class="theme__text theme__text--dark">Dark Mode</span>
+    </button>
   </header>
 </body>
 

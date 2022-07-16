@@ -21,3 +21,8 @@ img {
   width: 100%;
   object-position: center;
 }
+
+button {
+  font-size: inherit;
+  color: inherit;
+}
