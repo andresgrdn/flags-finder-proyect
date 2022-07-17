@@ -29,6 +29,16 @@
       overflow: hidden;
     }
 
+    .header-container>* {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .header__title {
+      font-size: var(--fs-normal);
+      font-weight: var(--fw-bold);
+    }
+
     .theme__toggle-btn {
       border: none;
 
@@ -51,6 +61,10 @@
 
     .theme__icon--dark {
       background-image: url('https://cdn-icons-png.flaticon.com/512/6714/6714978.png');
+    }
+
+    .theme__text {
+      font-weight: var(--fw-thin);
     }
   </style>
 </head>
