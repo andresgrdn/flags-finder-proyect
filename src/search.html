@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <link rel="stylesheet" href="./styles/main.css">
+  <style>
+    /* no useful */
+    body {
+      background-color: #202d36;
+      color: white;
+    }
+
+    /* no useful */
+
+    .search-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-content: center;
+
+      border: 1px solid black;
+    }
+
+    .search-bar {
+      padding: 1.6em 1.2em;
+      width: min(600px, 100%);
+
+      background-color: hsla(0, 0%, 100%, 0.04);
+      box-shadow: 0 0 0 0.4em hsla(0, 0%, 0%, 0.04);
+    }
+
+    .search-bar__input,
+    .search-bar__icon {
+      vertical-align: middle;
+    }
+
+    .search-bar__icon {
+      display: inline-block;
+
+      width: 9%;
+      height: 100%;
+
+      background-image: url("../assets/magnifying-glass-solid.svg");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+
+      border: 1px solid red;
+    }
+
+    .search-bar__input {
+      border: none;
+      width: 90%;
+
+      color: inherit;
+
+      background-color: hsla(0, 0%, 0%, 0);
+      outline: none;
+
+      border: 1px solid blue;
+    }
+
+    /* ----- */
+
+    .header-container {
+
+      justify-content: space-between;
+      align-content: center;
+
+      padding: 1.6em 1.2em;
+
+      background-color: hsla(0, 0%, 100%, 0.04);
+      box-shadow: 0 0 0 0.4em hsla(0, 0%, 0%, 0.04);
+
+      overflow: hidden;
+    }
+
+    .header-container>* {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .header__title {
+      font-size: var(--fs-normal);
+      font-weight: var(--fw-bold);
+    }
+
+    .theme__toggle-btn {
+      border: none;
+
+      background-color: hsla(0, 0%, 0%, 0);
+    }
+
+    .theme__toggle-btn>* {
+      vertical-align: middle;
+    }
+
+    .theme__icon {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+
+    .theme__icon--dark {
+      background-image: url('https://cdn-icons-png.flaticon.com/512/6714/6714978.png');
+    }
+
+    .theme__text {
+      font-weight: var(--fw-thin);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="search-container">
+    <div class="search-bar">
+      <i class="search-bar__icon"></i>
+      <input class="search-bar__input" type="search" name="searchQuery" id="searchQuery"
+        placeholder="Search for a country...">
+    </div>
+
+    <select class="filter" name="region" id="region-select">
+      <option value="">Filter by Region</option>
+      <option value="africa">Africa</option>
+      <option value="america">America</option>
+      <option value="asia">Asia</option>
+      <option value="europe">Europe</option>
+      <option value="oceania">Oceania</option>
+    </select>
+  </div>
+</body>
+
+</html>
