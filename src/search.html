@@ -11,7 +11,7 @@
   <style>
     /* no useful */
     body {
-      background-color: #202d36;
+      background-color: hsl(205, 26%, 17%);
       color: white;
     }
 
@@ -22,11 +22,13 @@
       flex-wrap: wrap;
       justify-content: space-between;
       align-content: center;
+      gap: 1.5em;
 
-      border: 1px solid black;
+      padding: 1.5em;
     }
 
     .search-bar {
+      border-radius: 0.4em;
       padding: 1.6em 1.2em;
       width: min(600px, 100%);
 
@@ -49,8 +51,6 @@
       background-position: center;
       background-repeat: no-repeat;
       background-size: contain;
-
-      border: 1px solid red;
     }
 
     .search-bar__input {
@@ -61,61 +61,23 @@
 
       background-color: hsla(0, 0%, 0%, 0);
       outline: none;
-
-      border: 1px solid blue;
     }
 
-    /* ----- */
-
-    .header-container {
-
-      justify-content: space-between;
-      align-content: center;
-
+    .filter {
+      border: none;
+      border-radius: 0.4em;
       padding: 1.6em 1.2em;
+
+      font-size: inherit;
+      font-family: inherit;
+      color: inherit;
 
       background-color: hsla(0, 0%, 100%, 0.04);
       box-shadow: 0 0 0 0.4em hsla(0, 0%, 0%, 0.04);
-
-      overflow: hidden;
     }
 
-    .header-container>* {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .header__title {
-      font-size: var(--fs-normal);
-      font-weight: var(--fw-bold);
-    }
-
-    .theme__toggle-btn {
-      border: none;
-
-      background-color: hsla(0, 0%, 0%, 0);
-    }
-
-    .theme__toggle-btn>* {
-      vertical-align: middle;
-    }
-
-    .theme__icon {
-      display: inline-block;
-      width: 1em;
-      height: 1em;
-
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: contain;
-    }
-
-    .theme__icon--dark {
-      background-image: url('https://cdn-icons-png.flaticon.com/512/6714/6714978.png');
-    }
-
-    .theme__text {
-      font-weight: var(--fw-thin);
+    .filter>option {
+      background-color: hsl(205, 26%, 17%);
     }
   </style>
 </head>
