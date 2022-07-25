@@ -16,34 +16,82 @@
     }
 
     /* no useful */
+
+    .details-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 1.2em;
+    }
+
+    .card__img {
+      max-width: 640px;
+      box-shadow: 0 0 0 0.4em hsla(0, 0%, 0%, 0.04);
+    }
+
+    .bottom-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+    }
+
+    .bottom-section p {
+      display: inline;
+    }
+
+    .countries-links {
+      display: inline;
+      list-style: none;
+      padding: 0;
+    }
+
+    .countries-links li {
+      display: inline-block;
+
+      color: inherit;
+    }
+
+    .countries-links li+li {
+      margin-left: 1em;
+    }
+
+    .countries-links a {
+      border-radius: 0.4em;
+      padding: 0.8em 2.4em;
+      text-decoration: none;
+      color: inherit;
+      background-color: hsla(0, 0%, 100%, 0.04);
+      box-shadow: 0 0 0 0.4em hsla(0, 0%, 0%, 0.04);
+    }
   </style>
 </head>
 
 <body>
   <div class="details-container">
-    <img class="card__img" src="" alt="">
+    <img class="card__img"
+      src="https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png" alt="">
     <div class="card__details">
-      <h2>Belgium</h2>
-      <div>
-        <p>Native Name: <span>Belgie</span></p>
+      <h2 class="card__title">Belgium</h2>
+      <div class="left-section">
+        <p>Native Name: <span>Belgium</span></p>
         <p>Population: <span>11,319,511</span></p>
         <p>Region: <span>Europe</span></p>
         <p>Sub Region: <span>Western Europe</span></p>
         <p>Capital: <span>Brussels</span></p>
       </div>
-      <div>
+      <div class="right-section">
         <p>Top Level Domain: <span>.be</span></p>
         <p>Currencies: <span>Euro</span></p>
         <p>Languages: <span>Dutch, French, German</span></p>
       </div>
-      <div>
-        <p>Border Countries:
-        <ul>
+      <div class="bottom-section">
+        <p>Border Countries:</p>
+        <ul class="countries-links">
           <li><a href="">France</a></li>
           <li><a href="">Germany</a></li>
           <li><a href="">Netherlands</a></li>
         </ul>
-        </p>
       </div>
     </div>
   </div>
