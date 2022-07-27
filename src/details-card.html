@@ -21,6 +21,7 @@
     }
 
     .details-container {
+      --card-max-width: 560px;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -29,7 +30,7 @@
     }
 
     .card__img {
-      max-width: 640px;
+      max-width: var(--card-max-width);
       box-shadow: 0 0 0 0.4em hsla(0, 0%, 0%, 0.04);
     }
 
@@ -40,6 +41,7 @@
         'main-data'
         'secondary-data'
         'border-countries';
+      max-width: var(--card-max-width);
     }
 
     .card__details p {
@@ -137,6 +139,12 @@
         <div class="bottom-section">
           <p>Border Countries:</p>
           <ul class="countries-links">
+            <li><a href="">France</a></li>
+            <li><a href="">Germany</a></li>
+            <li><a href="">Netherlands</a></li>
+            <li><a href="">France</a></li>
+            <li><a href="">Germany</a></li>
+            <li><a href="">Netherlands</a></li>
             <li><a href="">France</a></li>
             <li><a href="">Germany</a></li>
             <li><a href="">Netherlands</a></li>
