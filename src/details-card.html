@@ -16,6 +16,9 @@
     }
 
     /* no useful */
+    .flag-data-container {
+      padding: 1.2em;
+    }
 
     .details-container {
       display: flex;
@@ -30,6 +33,15 @@
       box-shadow: 0 0 0 0.4em hsla(0, 0%, 0%, 0.04);
     }
 
+    .card__details {
+      display: grid;
+      grid-template-areas:
+        'title'
+        'main-data'
+        'secondary-data'
+        'border-countries';
+    }
+
     .card__details p {
       font-weight: var(--fw-regular);
     }
@@ -37,6 +49,22 @@
     .card__details span {
       font-weight: var(--fw-thin);
 
+    }
+
+    .card__title {
+      grid-area: title;
+    }
+
+    .left-section {
+      grid-area: main-data;
+    }
+
+    .right-section {
+      grid-area: secondary-data;
+    }
+
+    .bottom-section {
+      grid-area: border-countries;
     }
 
 
@@ -74,34 +102,46 @@
       background-color: hsla(0, 0%, 100%, 0.04);
       box-shadow: 0 0 0 0.4em hsla(0, 0%, 0%, 0.04);
     }
+
+    @media (min-width: 640px) {
+      .card__details {
+        grid-template-areas:
+          'title title'
+          'main-data secondary-data'
+          'border-countries border-countries';
+      }
+    }
   </style>
 </head>
 
 <body>
-  <div class="details-container">
-    <img class="card__img"
-      src="https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png" alt="">
-    <div class="card__details">
-      <h2 class="card__title">Belgium</h2>
-      <div class="left-section">
-        <p>Native Name: <span>Belgium</span></p>
-        <p>Population: <span>11,319,511</span></p>
-        <p>Region: <span>Europe</span></p>
-        <p>Sub Region: <span>Western Europe</span></p>
-        <p>Capital: <span>Brussels</span></p>
-      </div>
-      <div class="right-section">
-        <p>Top Level Domain: <span>.be</span></p>
-        <p>Currencies: <span>Euro</span></p>
-        <p>Languages: <span>Dutch, French, German</span></p>
-      </div>
-      <div class="bottom-section">
-        <p>Border Countries:</p>
-        <ul class="countries-links">
-          <li><a href="">France</a></li>
-          <li><a href="">Germany</a></li>
-          <li><a href="">Netherlands</a></li>
-        </ul>
+  <div class="flag-data-container">
+    <div class="details-container">
+      <img class="card__img"
+        src="https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png"
+        alt="">
+      <div class="card__details">
+        <h2 class="card__title">Belgium</h2>
+        <div class="left-section">
+          <p>Native Name: <span>Belgium</span></p>
+          <p>Population: <span>11,319,511</span></p>
+          <p>Region: <span>Europe</span></p>
+          <p>Sub Region: <span>Western Europe</span></p>
+          <p>Capital: <span>Brussels</span></p>
+        </div>
+        <div class="right-section">
+          <p>Top Level Domain: <span>.be</span></p>
+          <p>Currencies: <span>Euro</span></p>
+          <p>Languages: <span>Dutch, French, German</span></p>
+        </div>
+        <div class="bottom-section">
+          <p>Border Countries:</p>
+          <ul class="countries-links">
+            <li><a href="">France</a></li>
+            <li><a href="">Germany</a></li>
+            <li><a href="">Netherlands</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
