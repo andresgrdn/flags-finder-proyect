@@ -42,6 +42,58 @@ function card(flagImage, flagName, population, region, capital) {
   return view;
 };
 
+function cardDescription(
+  flagImage,
+  countryName,
+  countyNativeName,
+  population,
+  region,
+  subRegion,
+  capital,
+  topDomain,
+  currencies,
+  languages,
+  borderCountries) {
+  const view = `
+    <div class="flag-data-container">
+    <div class="details-container">
+      <img class="card__img"
+        src="${flagImage}"
+        alt="${countryName}">
+      <div class="card__details">
+        <h2 class="card__title">${countryName}</h2>
+        <div class="left-section">
+          <p>Native Name: <span>${countyNativeName}</span></p>
+          <p>Population: <span>${population}</span></p>
+          <p>Region: <span>${region}</span></p>
+          <p>Sub Region: <span>${subRegion}</span></p>
+          <p>Capital: <span>${capital}</span></p>
+        </div>
+        <div class="right-section">
+          <p>Top Level Domain: <span>${topDomain}</span></p>
+          <p>Currencies: <span>${currencies}</span></p>
+          <p>Languages: <span>${languages}</span></p>
+        </div>
+        <div class="bottom-section">
+          <p>Border Countries:</p>
+          <ul class="countries-links">
+            <li><a href="">France</a></li>
+            <li><a href="">Germany</a></li>
+            <li><a href="">Netherlands</a></li>
+            <li><a href="">France</a></li>
+            <li><a href="">Germany</a></li>
+            <li><a href="">Netherlands</a></li>
+            <li><a href="">France</a></li>
+            <li><a href="">Germany</a></li>
+            <li><a href="">Netherlands</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  `;
+}
+
 function searchByName(data, query) {
   const lowerCaseQuery = query.toLowerCase();
 
