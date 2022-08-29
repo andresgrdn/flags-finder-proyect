@@ -1,0 +1,212 @@
+/* Variables */
+
+:root {
+  --inline-pad: 1.5em;
+
+  --fw-thin: 300;
+  --fw-regular: 600;
+  --fw-bold: 800;
+
+  --fs-normal: 14rem;
+  --fs-large: 16rem;
+}
+
+/* Base */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 6.25%;
+}
+
+body {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: var(--fs-normal);
+}
+
+img {
+  display: block;
+  width: 100%;
+  object-position: center;
+}
+
+button {
+  font-size: inherit;
+  color: inherit;
+}
+
+/* General */
+
+body {
+  background-color: #202d36;
+  color: white;
+}
+
+/* Header */
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+
+  padding: var(--inline-pad) 1.2em;
+
+  background-color: hsla(0, 0%, 100%, 0.04);
+  box-shadow: 0 0 0 0.4em hsla(0, 0%, 0%, 0.04);
+
+  overflow: hidden;
+}
+
+.header-container>* {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.header__title {
+  font-size: var(--fs-normal);
+  font-weight: var(--fw-bold);
+}
+
+.theme__toggle-btn {
+  border: none;
+
+  background-color: hsla(0, 0%, 0%, 0);
+}
+
+.theme__toggle-btn>* {
+  vertical-align: middle;
+}
+
+.theme__icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.theme__icon--dark {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/6714/6714978.png');
+}
+
+.theme__text {
+  font-weight: var(--fw-thin);
+}
+
+/* Search container */
+
+.search-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: center;
+  gap: 1.5em;
+
+  padding: var(--inline-pad);
+}
+
+.search-bar {
+  border-radius: 0.4em;
+  padding: 1.6em 1.2em;
+  width: min(600px, 100%);
+
+  background-color: hsla(0, 0%, 100%, 0.04);
+  box-shadow: 0 0 0 0.4em hsla(0, 0%, 0%, 0.04);
+}
+
+.search-bar__input,
+.search-bar__icon {
+  vertical-align: middle;
+}
+
+.search-bar__icon {
+  display: inline-block;
+
+  width: 9%;
+  height: 100%;
+
+  background-image: url("./icons/magnifying-glass-solid.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.search-bar__input {
+  border: none;
+  width: 90%;
+
+  color: inherit;
+
+  background-color: hsla(0, 0%, 0%, 0);
+  outline: none;
+}
+
+.filter {
+  border: none;
+  border-radius: 0.4em;
+  padding: 1.6em 1.2em;
+
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+
+  background-color: hsla(0, 0%, 100%, 0.04);
+  box-shadow: 0 0 0 0.4em hsla(0, 0%, 0%, 0.04);
+}
+
+.filter>option {
+  background-color: hsl(205, 26%, 17%);
+}
+
+/* Cards container */
+
+.cards-container {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.8em;
+
+  padding: var(--inline-pad);
+}
+
+@media (max-width:640px) {
+  .cards-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+/* Card */
+
+.card {
+  border-radius: 0.4em;
+
+  background-color: hsla(0, 0%, 100%, 0.04);
+  box-shadow: 0 0 0 1em hsla(0, 0%, 0%, 0.04);
+
+  overflow: hidden;
+}
+
+.card__info {
+  padding: 2em 1.2em;
+}
+
+.card__info h2 {
+  font-weight: var(--fw-bold);
+}
+
+.card__info p {
+  font-weight: var(--fw-thin);
+}
+
+.card__info span {
+  font-weight: var(--fw-regular);
+}
