@@ -24,12 +24,12 @@ const searchInput = document.getElementById('searchInput');
 const regionSelect = document.getElementById('regionSelect');
 const themeButton = document.getElementById('themeButton');
 const searchContainer = document.getElementById('searchContainer');
+const cardDetailsContainer = document.getElementById('cardDetailsContainer');
 
 let flagsData;
 
 function card(flagImage, flagName, population, region, capital) {
   const view = `
-  <div class="card-container">
     <div class="card">
       <picture>
         <img src="${flagImage}"
@@ -42,7 +42,6 @@ function card(flagImage, flagName, population, region, capital) {
         <p><span>Capital:</span> ${capital}</p>
       </div>
     </div>
-  </div>
   `;
 
   return view;
@@ -61,11 +60,8 @@ function cardDescription(
   languages,
   borderCountries) {
   const view = `
-    <div class="flag-data-container">
     <div class="details-container">
-      <img class="card__img"
-        src="${flagImage}"
-        alt="${countryName}">
+      <img class="card__img" src="${flagImage}" alt="${countryName}">
       <div class="card__details">
         <h2 class="card__title">${countryName}</h2>
         <div class="left-section">
@@ -96,7 +92,6 @@ function cardDescription(
         </div>
       </div>
     </div>
-  </div>
   `;
 
   return view;
@@ -143,6 +138,16 @@ getData()
     flagsData = data;
 
     flagsContainer.innerHTML = buildCards(flagsData);
+
+    firstFlag = data[0];
+    cardDetailsContainer.innerHTML = cardDescription(
+      firstFlag.flags.png,
+      firstFlag.name.official,
+      firstFlag.name.official,
+      firstFlag.population,
+      firstFlag.region,
+      firstFlag.capital, 0, 0, 0, 0, 0
+    );
   })
   .catch(error => console.error(error));
 
@@ -175,6 +180,7 @@ regionSelect.addEventListener('change', () => {
 })
 
 themeButton.addEventListener('click', () => {
+  toggle(cardDetailsContainer, 'hide');
   toggle(searchContainer, 'hide');
   toggle(flagsContainer, 'hide');
 })

@@ -213,8 +213,8 @@ body {
 
 /* Card details */
 
-.flag-data-container {
-  padding: 1.2em;
+.card-details-container {
+  padding: var(--inline-pad);
 }
 
 .details-container {
