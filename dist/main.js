@@ -13,11 +13,17 @@ async function getData() {
   }
 }
 
+function toggle(element, style) {
+  element.classList.toggle(style);
+}
+
 // Main
 
 const flagsContainer = document.getElementById('flagsContainer');
 const searchInput = document.getElementById('searchInput');
 const regionSelect = document.getElementById('regionSelect');
+const themeButton = document.getElementById('themeButton');
+const searchContainer = document.getElementById('searchContainer');
 
 let flagsData;
 
@@ -92,6 +98,8 @@ function cardDescription(
     </div>
   </div>
   `;
+
+  return view;
 }
 
 function searchByName(data, query) {
@@ -164,4 +172,9 @@ regionSelect.addEventListener('change', () => {
   }
 
   flagsContainer.innerHTML = buildCards(searchResults);
+})
+
+themeButton.addEventListener('click', () => {
+  toggle(searchContainer, 'hide');
+  toggle(flagsContainer, 'hide');
 })

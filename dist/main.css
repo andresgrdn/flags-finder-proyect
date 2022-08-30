@@ -309,3 +309,9 @@ body {
       'border-countries border-countries';
   }
 }
+
+/* Utils */
+
+.hide {
+  display: none;
+}
