@@ -1,6 +1,11 @@
 /* Variables */
 
 :root {
+  --bg-component: hsla(0, 0%, 100%, 0.04);
+
+  --border-shadow: 0 0 0 0.6em hsla(0, 0%, 0%, 0.04);
+  --border-shadow_hover: 0 0 0 0.6em hsla(0, 0%, 0%, 0.08);
+
   --inline-pad: 1.5em;
 
   --fw-thin: 300;
@@ -45,8 +50,8 @@ button {
 /* General */
 
 body {
-  background-color: #202d36;
-  color: white;
+  background-color: hsl(205, 26%, 17%);
+  color: #ffffff;
 }
 
 /* Header */
@@ -58,8 +63,8 @@ body {
 
   padding: var(--inline-pad) 1.2em;
 
-  background-color: hsla(0, 0%, 100%, 0.04);
-  box-shadow: 0 0 0 0.4em hsla(0, 0%, 0%, 0.04);
+  background-color: var(--bg-component);
+  box-shadow: var(--border-shadow);
 
   overflow: hidden;
 }
@@ -119,8 +124,12 @@ body {
   padding: 1.6em 1.2em;
   width: min(600px, 100%);
 
-  background-color: hsla(0, 0%, 100%, 0.04);
-  box-shadow: 0 0 0 0.4em hsla(0, 0%, 0%, 0.04);
+  background-color: var(--bg-component);
+  box-shadow: var(--border-shadow);
+}
+
+.search-bar:hover {
+  box-shadow: var(--border-shadow_hover);
 }
 
 .search-bar__input,
@@ -159,8 +168,12 @@ body {
   font-family: inherit;
   color: inherit;
 
-  background-color: hsla(0, 0%, 100%, 0.04);
-  box-shadow: 0 0 0 0.4em hsla(0, 0%, 0%, 0.04);
+  background-color: var(--bg-component);
+  box-shadow: var(--border-shadow);
+}
+
+.filter:hover {
+  box-shadow: var(--border-shadow_hover);
 }
 
 .filter>option {
@@ -189,10 +202,21 @@ body {
 .card {
   border-radius: 0.4em;
 
-  background-color: hsla(0, 0%, 100%, 0.04);
-  box-shadow: 0 0 0 1em hsla(0, 0%, 0%, 0.04);
+  background-color: var(--bg-component);
+  box-shadow: var(--border-shadow);
 
   overflow: hidden;
+  cursor: pointer;
+}
+
+.card:hover {
+  background-color: hsla(0, 0%, 100%, 0.08);
+  box-shadow: var(--border-shadow_hover);
+}
+
+.card__img {
+  height: 40%;
+  object-fit: cover;
 }
 
 .card__info {
@@ -228,7 +252,7 @@ body {
 
 .card__img {
   max-width: var(--card-max-width);
-  box-shadow: 0 0 0 0.4em hsla(0, 0%, 0%, 0.04);
+  box-shadow: var(--border-shadow);
 }
 
 .card__details {
@@ -297,8 +321,8 @@ body {
   padding: 0.8em 2.4em;
   text-decoration: none;
   color: inherit;
-  background-color: hsla(0, 0%, 100%, 0.04);
-  box-shadow: 0 0 0 0.4em hsla(0, 0%, 0%, 0.04);
+  background-color: var(--bg-component);
+  box-shadow: var(--border-shadow);
 }
 
 @media (min-width: 640px) {

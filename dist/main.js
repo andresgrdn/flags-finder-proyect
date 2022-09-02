@@ -29,23 +29,35 @@ const cardDetailsContainer = document.getElementById('cardDetailsContainer');
 let flagsData;
 
 function card(flagImage, flagName, population, region, capital) {
+  const classes = ['card'];
+  const container = document.createElement('div');
+
   const view = `
-    <div class="card">
-      <picture>
-        <img src="${flagImage}"
-          alt="Flag image">
-      </picture>
-      <div class="card__info">
-        <h2>${flagName}</h2>
-        <p><span>Population:</span> ${population}</p>
-        <p><span>Region:</span> ${region}</p>
-        <p><span>Capital:</span> ${capital}</p>
-      </div>
+    <picture>
+      <img class="card__img" src="${flagImage}" alt="${flagName} flag">
+    </picture>
+    <div class="card__info">
+      <h2>${flagName}</h2>
+      <p><span>Population:</span> ${population}</p>
+      <p><span>Region:</span> ${region}</p>
+      <p><span>Capital:</span> ${capital}</p>
     </div>
   `;
 
-  return view;
+  container.addEventListener('click', openCardDescription);
+
+  container.countryName = flagName;
+  container.classList.add(...classes);
+  container.innerHTML = view;
+
+  return container;
 };
+
+function showDescription() {
+  toggle(cardDetailsContainer, 'hide');
+  toggle(searchContainer, 'hide');
+  toggle(flagsContainer, 'hide');
+}
 
 function cardDescription(
   flagImage,
@@ -97,6 +109,32 @@ function cardDescription(
   return view;
 }
 
+function openCardDescription(event) {
+  const container = event.currentTarget;
+
+  console.log(`Current card clicking => ${container.countryName}`);
+
+  const countryInfo = flagsData.find(country => {
+    return country.name.official === container.countryName;
+  });
+
+  cardDetailsContainer.innerHTML = cardDescription(
+    countryInfo.flags.png,
+    countryInfo.name.official,
+    countryInfo.name.common,
+    countryInfo.population,
+    countryInfo.region,
+    countryInfo.subregion,
+    countryInfo.capital,
+    countryInfo.tld,
+    countryInfo.currencies,
+    countryInfo.languages,
+    countryInfo.borders
+  );
+
+  showDescription();
+}
+
 function searchByName(data, query) {
   const lowerCaseQuery = query.toLowerCase();
 
@@ -128,7 +166,7 @@ function buildCards(countriesData) {
       country.region,
       country.capital
     );
-  }).join(' ');;
+  });
 
   return cardsHTML;
 }
@@ -137,17 +175,8 @@ getData()
   .then(data => {
     flagsData = data;
 
-    flagsContainer.innerHTML = buildCards(flagsData);
-
-    firstFlag = data[0];
-    cardDetailsContainer.innerHTML = cardDescription(
-      firstFlag.flags.png,
-      firstFlag.name.official,
-      firstFlag.name.official,
-      firstFlag.population,
-      firstFlag.region,
-      firstFlag.capital, 0, 0, 0, 0, 0
-    );
+    const cardsHtmlElements = buildCards(flagsData);
+    flagsContainer.append(...cardsHtmlElements);
   })
   .catch(error => console.error(error));
 
@@ -161,7 +190,8 @@ searchInput.addEventListener('input', () => {
     return;
   }
 
-  flagsContainer.innerHTML = buildCards(searchResults);
+  const searchedCards = buildCards(searchResults);
+  flagsContainer.replaceChildren(...searchedCards);
 });
 
 regionSelect.addEventListener('change', () => {
@@ -176,11 +206,10 @@ regionSelect.addEventListener('change', () => {
     return;
   }
 
-  flagsContainer.innerHTML = buildCards(searchResults);
+  const filteredCards = buildCards(searchResults);
+  flagsContainer.replaceChildren(...filteredCards);
 })
 
 themeButton.addEventListener('click', () => {
-  toggle(cardDetailsContainer, 'hide');
-  toggle(searchContainer, 'hide');
-  toggle(flagsContainer, 'hide');
+  console.log('theme button clicked!');
 })
