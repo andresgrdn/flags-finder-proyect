@@ -211,5 +211,5 @@ regionSelect.addEventListener('change', () => {
 })
 
 themeButton.addEventListener('click', () => {
-  console.log('theme button clicked!');
+  document.body.classList.toggle('dark-mode');
 })

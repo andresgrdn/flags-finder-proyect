@@ -1,7 +1,10 @@
 /* Variables */
 
 :root {
+  --bg-primary: hsl(205, 26%, 17%);
   --bg-component: hsla(0, 0%, 100%, 0.04);
+  --bg-component_hover: hsla(0, 0%, 100%, 0.08);
+  --font-color: hsla(0, 0%, 100%, 1);
 
   --border-shadow: 0 0 0 0.6em hsla(0, 0%, 0%, 0.04);
   --border-shadow_hover: 0 0 0 0.6em hsla(0, 0%, 0%, 0.08);
@@ -49,9 +52,19 @@ button {
 
 /* General */
 
+.dark-mode {
+  --bg-primary: hsla(0, 0%, 98%, 1);
+  --font-color: hsla(0, 0%, 20%, 1);
+  --bg-component: hsla(0, 0%, 100%, 1);
+  --bg-component_hover: hsla(0, 0%, 100%, 0.5);
+
+  --border-shadow: 0 0 0.8em 0.4em hsl(0deg 0% 0% / 4%);
+  --border-shadow_hover: 0 0 0.2em 0.2em hsl(0deg 0% 0% / 8%);
+}
+
 body {
-  background-color: hsl(205, 26%, 17%);
-  color: #ffffff;
+  background-color: var(--bg-primary);
+  color: var(--font-color);
 }
 
 /* Header */
@@ -210,7 +223,7 @@ body {
 }
 
 .card:hover {
-  background-color: hsla(0, 0%, 100%, 0.08);
+  background-color: var(--bg-component_hover);
   box-shadow: var(--border-shadow_hover);
 }
 
