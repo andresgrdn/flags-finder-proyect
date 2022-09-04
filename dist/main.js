@@ -25,6 +25,7 @@ const regionSelect = document.getElementById('regionSelect');
 const themeButton = document.getElementById('themeButton');
 const searchContainer = document.getElementById('searchContainer');
 const cardDetailsContainer = document.getElementById('cardDetailsContainer');
+const backButton = document.getElementById('backButton');
 
 let flagsData;
 
@@ -54,6 +55,14 @@ function card(flagImage, flagName, population, region, capital) {
 };
 
 function showDescription() {
+  toggle(backButton, 'hide');
+  toggle(cardDetailsContainer, 'hide');
+  toggle(searchContainer, 'hide');
+  toggle(flagsContainer, 'hide');
+}
+
+function showHome() {
+  toggle(backButton, 'hide');
   toggle(cardDetailsContainer, 'hide');
   toggle(searchContainer, 'hide');
   toggle(flagsContainer, 'hide');
@@ -212,4 +221,8 @@ regionSelect.addEventListener('change', () => {
 
 themeButton.addEventListener('click', () => {
   document.body.classList.toggle('dark-mode');
+})
+
+backButton.addEventListener('click', () => {
+  showHome();
 })

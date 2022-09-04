@@ -9,6 +9,8 @@
   --border-shadow: 0 0 0 0.6em hsla(0, 0%, 0%, 0.04);
   --border-shadow_hover: 0 0 0 0.6em hsla(0, 0%, 0%, 0.08);
 
+  --border-radius-normal: 0.4em;
+
   --inline-pad: 1.5em;
 
   --fw-thin: 300;
@@ -133,7 +135,7 @@ body {
 }
 
 .search-bar {
-  border-radius: 0.4em;
+  border-radius: var(--border-radius-normal);
   padding: 1.6em 1.2em;
   width: min(600px, 100%);
 
@@ -174,7 +176,7 @@ body {
 
 .filter {
   border: none;
-  border-radius: 0.4em;
+  border-radius: var(--border-radius-normal);
   padding: 1.6em 1.2em;
 
   font-size: inherit;
@@ -213,7 +215,7 @@ body {
 /* Card */
 
 .card {
-  border-radius: 0.4em;
+  border-radius: var(--border-radius-normal);
 
   background-color: var(--bg-component);
   box-shadow: var(--border-shadow);
@@ -249,6 +251,37 @@ body {
 }
 
 /* Card details */
+
+.back-button {
+  margin: var(--inline-pad);
+  border: none;
+  border-radius: var(--border-radius-normal);
+  box-shadow: var(--border-shadow);
+  padding: 0.5em var(--inline-pad);
+
+  font: var(--fs-normal) inherit;
+
+  background-color: var(--bg-component);
+  cursor: pointer;
+}
+
+.back-button:hover {
+  box-shadow: var(--border-shadow_hover);
+  background-color: var(--bg-component_hover);
+}
+
+.back-button>span {
+  display: inline-block;
+  vertical-align: middle;
+
+  --size: 16rem;
+  background-image: url('./icons/arrow_back_FILL0_wght400_GRAD0_opsz48.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: var(--size);
+  height: var(--size);
+}
 
 .card-details-container {
   padding: var(--inline-pad);
@@ -330,7 +363,7 @@ body {
 }
 
 .countries-links a {
-  border-radius: 0.4em;
+  border-radius: var(--border-radius-normal);
   padding: 0.8em 2.4em;
   text-decoration: none;
   color: inherit;
