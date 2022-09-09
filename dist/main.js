@@ -1,4 +1,16 @@
-// Utils
+const flagsContainer = document.getElementById('flagsContainer');
+const searchInput = document.getElementById('searchInput');
+const regionSelect = document.getElementById('regionSelect');
+const themeButton = document.getElementById('themeButton');
+const themeButtonIcon = document.querySelector('.theme-button__icon');
+const themeButtonText = document.querySelector('.theme-button__text');
+const searchContainer = document.getElementById('searchContainer');
+const cardDetailsContainer = document.getElementById('cardDetailsContainer');
+const backButton = document.getElementById('backButton');
+
+let flagsData;
+
+/* Helpers */
 
 const API = 'https://restcountries.com/v3.1/';
 
@@ -17,17 +29,52 @@ function toggle(element, style) {
   element.classList.toggle(style);
 }
 
-// Main
+/* Main logic */
 
-const flagsContainer = document.getElementById('flagsContainer');
-const searchInput = document.getElementById('searchInput');
-const regionSelect = document.getElementById('regionSelect');
-const themeButton = document.getElementById('themeButton');
-const searchContainer = document.getElementById('searchContainer');
-const cardDetailsContainer = document.getElementById('cardDetailsContainer');
-const backButton = document.getElementById('backButton');
+getData()
+  .then(data => {
+    flagsData = data;
 
-let flagsData;
+    const cardsHtmlElements = buildCards(flagsData);
+    flagsContainer.append(...cardsHtmlElements);
+  })
+  .catch(error => console.error(error));
+
+
+searchInput.addEventListener('input', () => {
+  const searchResults = searchByName(flagsData, searchInput.value);
+
+  if (searchResults.length === 0) {
+    flagsContainer.innerHTML = `No results found...`;
+
+    return;
+  }
+
+  const searchedCards = buildCards(searchResults);
+  flagsContainer.replaceChildren(...searchedCards);
+});
+
+regionSelect.addEventListener('change', () => {
+  // return the value of the selected option
+  const region = regionSelect.options[regionSelect.selectedIndex].value;
+
+  const searchResults = filterByRegion(flagsData, region);
+
+  if (searchResults.length === 0) {
+    flagsContainer.innerHTML = `No results found...`;
+
+    return;
+  }
+
+  const filteredCards = buildCards(searchResults);
+  flagsContainer.replaceChildren(...filteredCards);
+})
+
+themeButton.addEventListener('click', changeTheme);
+
+backButton.addEventListener('click', () => {
+  showHome();
+})
 
 function card(flagImage, flagName, population, region, capital) {
   const classes = ['card'];
@@ -80,6 +127,13 @@ function cardDescription(
   currencies,
   languages,
   borderCountries) {
+
+  if (borderCountries === undefined) {
+    borderCountries = [];
+  }
+
+  console.log(borderCountries);
+
   const view = `
     <div class="details-container">
       <img class="card__img" src="${flagImage}" alt="${countryName}">
@@ -100,15 +154,10 @@ function cardDescription(
         <div class="bottom-section">
           <p>Border Countries:</p>
           <ul class="countries-links">
-            <li><a href="">France</a></li>
-            <li><a href="">Germany</a></li>
-            <li><a href="">Netherlands</a></li>
-            <li><a href="">France</a></li>
-            <li><a href="">Germany</a></li>
-            <li><a href="">Netherlands</a></li>
-            <li><a href="">France</a></li>
-            <li><a href="">Germany</a></li>
-            <li><a href="">Netherlands</a></li>
+            ${(borderCountries.map(country => {
+    return searchByCCA3(flagsData, country)
+  })).join(' ')}
+            <li><button type="button">France</button></li>
           </ul>
         </div>
       </div>
@@ -126,6 +175,8 @@ function openCardDescription(event) {
   const countryInfo = flagsData.find(country => {
     return country.name.official === container.countryName;
   });
+
+  console.log(countryInfo.cca3);
 
   cardDetailsContainer.innerHTML = cardDescription(
     countryInfo.flags.png,
@@ -166,6 +217,17 @@ function filterByRegion(data, query) {
   return result;
 }
 
+function searchByCCA3(data, query) {
+  const lowerCaseQuery = query.toLowerCase();
+
+  const result = data.filter(country => {
+    return country.cca3.toLowerCase()
+      .includes(lowerCaseQuery);
+  });
+
+  return result;
+}
+
 function buildCards(countriesData) {
   const cardsHTML = countriesData.map(country => {
     return card(
@@ -180,49 +242,16 @@ function buildCards(countriesData) {
   return cardsHTML;
 }
 
-getData()
-  .then(data => {
-    flagsData = data;
+function changeTheme() {
+  const isDarkMode = themeButtonIcon.classList.contains('theme-button__icon--light');
 
-    const cardsHtmlElements = buildCards(flagsData);
-    flagsContainer.append(...cardsHtmlElements);
-  })
-  .catch(error => console.error(error));
-
-
-searchInput.addEventListener('input', () => {
-  const searchResults = searchByName(flagsData, searchInput.value);
-
-  if (searchResults.length === 0) {
-    flagsContainer.innerHTML = `No results found...`;
-
-    return;
+  if (isDarkMode) {
+    themeButtonIcon.classList.replace('theme-button__icon--light', 'theme-button__icon--dark');
+    themeButtonText.textContent = 'Light Mode';
+  } else {
+    themeButtonIcon.classList.replace('theme-button__icon--dark', 'theme-button__icon--light');
+    themeButtonText.textContent = 'Dark Mode';
   }
 
-  const searchedCards = buildCards(searchResults);
-  flagsContainer.replaceChildren(...searchedCards);
-});
-
-regionSelect.addEventListener('change', () => {
-  // return the value of the selected option
-  const region = regionSelect.options[regionSelect.selectedIndex].value;
-
-  const searchResults = filterByRegion(flagsData, region);
-
-  if (searchResults.length === 0) {
-    flagsContainer.innerHTML = `No results found...`;
-
-    return;
-  }
-
-  const filteredCards = buildCards(searchResults);
-  flagsContainer.replaceChildren(...filteredCards);
-})
-
-themeButton.addEventListener('click', () => {
-  document.body.classList.toggle('dark-mode');
-})
-
-backButton.addEventListener('click', () => {
-  showHome();
-})
+  document.body.classList.toggle('light-mode');
+}

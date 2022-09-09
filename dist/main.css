@@ -54,7 +54,7 @@ button {
 
 /* General */
 
-.dark-mode {
+.light-mode {
   --bg-primary: hsla(0, 0%, 98%, 1);
   --font-color: hsla(0, 0%, 20%, 1);
   --bg-component: hsla(0, 0%, 100%, 1);
@@ -94,31 +94,40 @@ body {
   font-weight: var(--fw-bold);
 }
 
-.theme__toggle-btn {
+.theme-button {
+  display: flex;
+  align-items: center;
+
   border: none;
 
   background-color: hsla(0, 0%, 0%, 0);
+  cursor: pointer;
+  transition: 1s;
 }
 
-.theme__toggle-btn>* {
-  vertical-align: middle;
-}
+.theme-button__icon {
+  --icon-size: 1em;
+  --area-size: 1.5em;
 
-.theme__icon {
-  display: inline-block;
-  width: 1em;
-  height: 1em;
+  display: block;
+
+  width: var(--area-size);
+  height: var(--area-size);
 
   background-position: center;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: var(--icon-size);
 }
 
-.theme__icon--dark {
-  background-image: url('https://cdn-icons-png.flaticon.com/512/6714/6714978.png');
+.theme-button__icon--dark {
+  background-image: url('./icons/sun-solid.svg');
 }
 
-.theme__text {
+.theme-button__icon--light {
+  background-image: url('./icons/moon-solid.svg');
+}
+
+.theme-button__text {
   font-weight: var(--fw-thin);
 }
 
@@ -192,7 +201,7 @@ body {
 }
 
 .filter>option {
-  background-color: hsl(205, 26%, 17%);
+  background-color: var(--bg-primary);
 }
 
 /* Cards container */
@@ -347,28 +356,33 @@ body {
 }
 
 .countries-links {
-  display: inline;
-  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6em;
+
   padding: 0;
+
+  list-style: none;
 }
 
-.countries-links li {
-  display: inline-block;
-
-  color: inherit;
-}
-
-.countries-links li+li {
-  margin-left: 1em;
-}
-
-.countries-links a {
+.countries-links button {
+  border: none;
   border-radius: var(--border-radius-normal);
   padding: 0.8em 2.4em;
+
   text-decoration: none;
+  font-family: inherit;
+  font-size: var(--fs-normal);
+
   color: inherit;
   background-color: var(--bg-component);
   box-shadow: var(--border-shadow);
+  cursor: pointer;
+}
+
+.countries-links button:hover {
+  background-color: var(--bg-component_hover);
+  box-shadow: var(--border-shadow_hover);
 }
 
 @media (min-width: 640px) {
