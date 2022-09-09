@@ -72,18 +72,16 @@ regionSelect.addEventListener('change', () => {
 
 themeButton.addEventListener('click', changeTheme);
 
-backButton.addEventListener('click', () => {
-  showHome();
-})
+backButton.addEventListener('click', showHome);
 
 function card(flagImage, flagName, population, region, capital) {
   const classes = ['card'];
   const container = document.createElement('div');
-
   const view = `
     <picture>
       <img class="card__img" src="${flagImage}" alt="${flagName} flag">
     </picture>
+    
     <div class="card__info">
       <h2>${flagName}</h2>
       <p><span>Population:</span> ${population}</p>
@@ -92,24 +90,22 @@ function card(flagImage, flagName, population, region, capital) {
     </div>
   `;
 
-  container.addEventListener('click', openCardDescription);
-
   container.countryName = flagName;
   container.classList.add(...classes);
   container.innerHTML = view;
 
+  container.addEventListener('click', renderCardDescription);
+
   return container;
 };
 
-function showDescription() {
-  toggle(backButton, 'hide');
+function openCountryDescription() {
   toggle(cardDetailsContainer, 'hide');
   toggle(searchContainer, 'hide');
   toggle(flagsContainer, 'hide');
 }
 
 function showHome() {
-  toggle(backButton, 'hide');
   toggle(cardDetailsContainer, 'hide');
   toggle(searchContainer, 'hide');
   toggle(flagsContainer, 'hide');
@@ -126,59 +122,55 @@ function cardDescription(
   topDomain,
   currencies,
   languages,
-  borderCountries) {
-
-  if (borderCountries === undefined) {
-    borderCountries = [];
-  }
-
-  console.log(borderCountries);
+  borderCountries = []) {
+  const container = document.createElement('div');
+  container.classList.add('details-container');
 
   const view = `
-    <div class="details-container">
-      <img class="card__img" src="${flagImage}" alt="${countryName}">
-      <div class="card__details">
-        <h2 class="card__title">${countryName}</h2>
-        <div class="left-section">
-          <p>Native Name: <span>${countyNativeName}</span></p>
-          <p>Population: <span>${population}</span></p>
-          <p>Region: <span>${region}</span></p>
-          <p>Sub Region: <span>${subRegion}</span></p>
-          <p>Capital: <span>${capital}</span></p>
-        </div>
-        <div class="right-section">
-          <p>Top Level Domain: <span>${topDomain}</span></p>
-          <p>Currencies: <span>${currencies}</span></p>
-          <p>Languages: <span>${languages}</span></p>
-        </div>
-        <div class="bottom-section">
-          <p>Border Countries:</p>
-          <ul class="countries-links">
-            ${(borderCountries.map(country => {
+    <img class="card__img" src="${flagImage}" alt="${countryName}">
+
+    <div class="card__details">
+      <h2 class="card__title">${countryName}</h2>
+
+      <div class="left-section">
+        <p>Native Name: <span>${countyNativeName}</span></p>
+        <p>Population: <span>${population}</span></p>
+        <p>Region: <span>${region}</span></p>
+        <p>Sub Region: <span>${subRegion}</span></p>
+        <p>Capital: <span>${capital}</span></p>
+      </div>
+
+      <div class="right-section">
+        <p>Top Level Domain: <span>${topDomain}</span></p>
+        <p>Currencies: <span>${currencies}</span></p>
+        <p>Languages: <span>${languages}</span></p>
+      </div>
+
+      <div class="bottom-section">
+        <p>Border Countries:</p>
+        <ul class="countries-links">
+          ${(borderCountries.map(country => {
     return searchByCCA3(flagsData, country)
   })).join(' ')}
-            <li><button type="button">France</button></li>
-          </ul>
-        </div>
+          <li><button type="button">France</button></li>
+        </ul>
       </div>
     </div>
   `;
 
-  return view;
+  container.innerHTML = view;
+
+  return container;
 }
 
-function openCardDescription(event) {
+function renderCardDescription(event) {
   const container = event.currentTarget;
-
-  console.log(`Current card clicking => ${container.countryName}`);
 
   const countryInfo = flagsData.find(country => {
     return country.name.official === container.countryName;
   });
 
-  console.log(countryInfo.cca3);
-
-  cardDetailsContainer.innerHTML = cardDescription(
+  const newCardDescription = cardDescription(
     countryInfo.flags.png,
     countryInfo.name.official,
     countryInfo.name.common,
@@ -192,7 +184,13 @@ function openCardDescription(event) {
     countryInfo.borders
   );
 
-  showDescription();
+  if (cardDetailsContainer.childElementCount > 1) {
+    cardDetailsContainer.lastElementChild.replaceWith(newCardDescription);
+  } else {
+    cardDetailsContainer.appendChild(newCardDescription);
+  }
+
+  openCountryDescription();
 }
 
 function searchByName(data, query) {
