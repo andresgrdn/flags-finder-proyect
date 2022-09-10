@@ -16,7 +16,8 @@
 
   --icon-back: url('./icons/arrow_back_white.svg');
   --icon-theme: url('./icons/sun-white.svg');
-  --icon-search: url("./icons/magnifying-glass-white.svg");
+  --icon-search: url('./icons/magnifying-glass-white.svg');
+  --icon-back-to-top: url('./icons/angle-down-black.svg');
 
   --fw-thin: 300;
   --fw-regular: 600;
@@ -72,6 +73,7 @@ button {
   --icon-back: url('./icons/arrow_back_black.svg');
   --icon-theme: url('./icons/moon-black.svg');
   --icon-search: url('./icons/magnifying-glass-black.svg');
+  --icon-back-to-top: url('./icons/angle-down-white.svg');
 }
 
 body {
@@ -300,8 +302,6 @@ body {
   background: no-repeat center/var(--icon-size) var(--icon-back);
 }
 
-.back-button__icon--light {}
-
 .card-details-container {
   padding: var(--inline-pad);
 }
@@ -392,6 +392,31 @@ body {
 
 .countries-links button:hover {
   background-color: var(--bg-component_hover);
+  box-shadow: var(--border-shadow_hover);
+}
+
+/* Back to top */
+
+.back-to-top {
+  --icon-size: 16px;
+  --area-size: 52px;
+
+  position: fixed;
+  bottom: 2em;
+  right: 2em;
+
+  display: block;
+
+  box-shadow: var(--border-shadow);
+  border-radius: 50%;
+  width: var(--area-size);
+  height: var(--area-size);
+
+  transform: rotateZ(180deg);
+  background: no-repeat center bottom 45% / var(--icon-size) var(--icon-back-to-top) var(--font-color_bg);
+}
+
+.back-to-top:hover {
   box-shadow: var(--border-shadow_hover);
 }
 
