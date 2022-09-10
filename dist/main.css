@@ -5,6 +5,7 @@
   --bg-component: hsla(0, 0%, 100%, 0.04);
   --bg-component_hover: hsla(0, 0%, 100%, 0.08);
   --font-color: hsla(0, 0%, 100%, 1);
+  --font-color_bg: hsla(0, 0%, 80%, 1);
 
   --border-shadow: 0 0 0 0.6em hsla(0, 0%, 0%, 0.04);
   --border-shadow_hover: 0 0 0 0.6em hsla(0, 0%, 0%, 0.08);
@@ -57,6 +58,7 @@ button {
 .light-mode {
   --bg-primary: hsla(0, 0%, 98%, 1);
   --font-color: hsla(0, 0%, 20%, 1);
+  --font-color_bg: hsla(0, 0%, 30%, 1);
   --bg-component: hsla(0, 0%, 100%, 1);
   --bg-component_hover: hsla(0, 0%, 100%, 0.5);
 
@@ -134,18 +136,25 @@ body {
 /* Search container */
 
 .search-container {
+  position: sticky;
+  top: 0;
+
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  align-content: center;
+  place-content: center space-between;
   gap: 1.5em;
 
   padding: var(--inline-pad);
+
+  background-image: linear-gradient(var(--bg-primary) 95%, transparent);
 }
 
 .search-bar {
+  display: flex;
+  align-items: center;
+
   border-radius: var(--border-radius-normal);
-  padding: 1.6em 1.2em;
+  padding-inline: 0.5em;
   width: min(600px, 100%);
 
   background-color: var(--bg-component);
@@ -156,31 +165,45 @@ body {
   box-shadow: var(--border-shadow_hover);
 }
 
-.search-bar__input,
 .search-bar__icon {
-  vertical-align: middle;
-}
+  --icon-size: 1em;
+  --area-size: 40px;
 
-.search-bar__icon {
-  display: inline-block;
+  display: block;
 
-  width: 9%;
-  height: 100%;
+  width: var(--area-size);
+  height: var(--area-size);
 
-  background-image: url("./icons/magnifying-glass-solid.svg");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: var(--icon-size);
+}
+
+.search-bar__icon--dark {
+  background-image: url("./icons/magnifying-glass-solid.svg");
+}
+
+.search-bar__icon--light {
+  background-image: url('./icons/magnifying-glass-solid-dark.svg');
 }
 
 .search-bar__input {
+  outline: none;
   border: none;
-  width: 90%;
+  padding-block: 1.6em;
+  width: 100%;
 
-  color: inherit;
+  font-size: var(--fs-normal);
+  font-weight: var(--fw-thin);
 
   background-color: hsla(0, 0%, 0%, 0);
-  outline: none;
+  color: inherit;
+}
+
+.search-bar__input::placeholder {
+  font-family: inherit;
+  font-weight: var(--fw-thin);
+  color: var(--font-color_bg);
 }
 
 .filter {
@@ -256,7 +279,7 @@ body {
 /* Card details */
 
 .back-button {
-  margin: var(--inline-pad);
+  margin-bottom: var(--inline-pad);
   border: none;
   border-radius: var(--border-radius-normal);
   box-shadow: var(--border-shadow);

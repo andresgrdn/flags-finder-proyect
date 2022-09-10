@@ -1,4 +1,5 @@
 const flagsContainer = document.getElementById('flagsContainer');
+const searchIcon = document.querySelector('.search-bar__icon');
 const searchInput = document.getElementById('searchInput');
 const regionSelect = document.getElementById('regionSelect');
 const themeButton = document.getElementById('themeButton');
@@ -71,7 +72,6 @@ regionSelect.addEventListener('change', () => {
 })
 
 themeButton.addEventListener('click', changeTheme);
-
 backButton.addEventListener('click', showHome);
 
 function card(flagImage, flagName, population, region, capital) {
@@ -246,9 +246,13 @@ function changeTheme() {
   if (isDarkMode) {
     themeButtonIcon.classList.replace('theme-button__icon--light', 'theme-button__icon--dark');
     themeButtonText.textContent = 'Light Mode';
+
+    searchIcon.classList.replace('search-bar__icon--light', 'search-bar__icon--dark');
   } else {
     themeButtonIcon.classList.replace('theme-button__icon--dark', 'theme-button__icon--light');
     themeButtonText.textContent = 'Dark Mode';
+
+    searchIcon.classList.replace('search-bar__icon--dark', 'search-bar__icon--light');
   }
 
   document.body.classList.toggle('light-mode');
