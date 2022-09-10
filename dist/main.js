@@ -1,16 +1,3 @@
-const flagsContainer = document.getElementById('flagsContainer');
-const searchIcon = document.querySelector('.search-bar__icon');
-const searchInput = document.getElementById('searchInput');
-const regionSelect = document.getElementById('regionSelect');
-const themeButton = document.getElementById('themeButton');
-const themeButtonIcon = document.querySelector('.theme-button__icon');
-const themeButtonText = document.querySelector('.theme-button__text');
-const searchContainer = document.getElementById('searchContainer');
-const cardDetailsContainer = document.getElementById('cardDetailsContainer');
-const backButton = document.getElementById('backButton');
-
-let flagsData;
-
 /* Helpers */
 
 const API = 'https://restcountries.com/v3.1/';
@@ -32,47 +19,33 @@ function toggle(element, style) {
 
 /* Main logic */
 
-getData()
-  .then(data => {
-    flagsData = data;
+const cardsContainer = document.querySelector('.cards-container');
+const searchIcon = document.querySelector('.search-bar__icon');
+const searchInput = document.getElementById('searchInput');
+const regionSelect = document.getElementById('regionSelect');
+const themeButton = document.getElementById('themeButton');
+const themeButtonIcon = document.querySelector('.theme-button__icon');
+const themeButtonText = document.querySelector('.theme-button__text');
+const searchContainer = document.getElementById('searchContainer');
+const cardDetailsContainer = document.getElementById('cardDetailsContainer');
+const backButton = document.getElementById('backButton');
+const backButtonIcon = document.querySelector('.back-button__icon');
 
-    const cardsHtmlElements = buildCards(flagsData);
-    flagsContainer.append(...cardsHtmlElements);
-  })
-  .catch(error => console.error(error));
-
-
-searchInput.addEventListener('input', () => {
-  const searchResults = searchByName(flagsData, searchInput.value);
-
-  if (searchResults.length === 0) {
-    flagsContainer.innerHTML = `No results found...`;
-
-    return;
-  }
-
-  const searchedCards = buildCards(searchResults);
-  flagsContainer.replaceChildren(...searchedCards);
-});
-
-regionSelect.addEventListener('change', () => {
-  // return the value of the selected option
-  const region = regionSelect.options[regionSelect.selectedIndex].value;
-
-  const searchResults = filterByRegion(flagsData, region);
-
-  if (searchResults.length === 0) {
-    flagsContainer.innerHTML = `No results found...`;
-
-    return;
-  }
-
-  const filteredCards = buildCards(searchResults);
-  flagsContainer.replaceChildren(...filteredCards);
-})
+let countriesData;
 
 themeButton.addEventListener('click', changeTheme);
+searchInput.addEventListener('input', renderSearchResult);
+regionSelect.addEventListener('change', renderFilterResult);
 backButton.addEventListener('click', showHome);
+
+firstCardsRender();
+
+async function firstCardsRender() {
+  countriesData = await getData();
+  const cards = buildCards(countriesData);
+
+  cardsContainer.append(...cards);
+}
 
 function card(flagImage, flagName, population, region, capital) {
   const classes = ['card'];
@@ -102,13 +75,27 @@ function card(flagImage, flagName, population, region, capital) {
 function openCountryDescription() {
   toggle(cardDetailsContainer, 'hide');
   toggle(searchContainer, 'hide');
-  toggle(flagsContainer, 'hide');
+  toggle(cardsContainer, 'hide');
 }
 
 function showHome() {
   toggle(cardDetailsContainer, 'hide');
   toggle(searchContainer, 'hide');
-  toggle(flagsContainer, 'hide');
+  toggle(cardsContainer, 'hide');
+}
+
+function buildCards(countriesData) {
+  const cardsHTML = countriesData.map(country => {
+    return card(
+      country.flags.png,
+      country.name.official,
+      country.population,
+      country.region,
+      country.capital
+    );
+  });
+
+  return cardsHTML;
 }
 
 function cardDescription(
@@ -150,7 +137,7 @@ function cardDescription(
         <p>Border Countries:</p>
         <ul class="countries-links">
           ${(borderCountries.map(country => {
-    return searchByCCA3(flagsData, country)
+    return searchByCCA3(countriesData, country)
   })).join(' ')}
           <li><button type="button">France</button></li>
         </ul>
@@ -166,7 +153,7 @@ function cardDescription(
 function renderCardDescription(event) {
   const container = event.currentTarget;
 
-  const countryInfo = flagsData.find(country => {
+  const countryInfo = countriesData.find(country => {
     return country.name.official === container.countryName;
   });
 
@@ -226,34 +213,33 @@ function searchByCCA3(data, query) {
   return result;
 }
 
-function buildCards(countriesData) {
-  const cardsHTML = countriesData.map(country => {
-    return card(
-      country.flags.png,
-      country.name.official,
-      country.population,
-      country.region,
-      country.capital
-    );
-  });
+function renderSearchResult() {
+  const countriesFound = searchByName(countriesData, searchInput.value);
+  const isNoResult = countriesFound.length === 0;
 
-  return cardsHTML;
+  if (isNoResult) {
+    cardsContainer.innerHTML = `No results found...`;
+    return;
+  }
+
+  const cards = buildCards(countriesFound);
+  cardsContainer.replaceChildren(...cards);
+}
+
+function renderFilterResult() {
+  const region = regionSelect.options[regionSelect.selectedIndex].value;
+  const filteredCountries = filterByRegion(countriesData, region);
+  const isNoResult = filteredCountries.length === 0;
+
+  if (isNoResult) {
+    cardsContainer.innerHTML = `No results found...`;
+    return;
+  }
+
+  const cards = buildCards(filteredCountries);
+  cardsContainer.replaceChildren(...cards);
 }
 
 function changeTheme() {
-  const isDarkMode = themeButtonIcon.classList.contains('theme-button__icon--light');
-
-  if (isDarkMode) {
-    themeButtonIcon.classList.replace('theme-button__icon--light', 'theme-button__icon--dark');
-    themeButtonText.textContent = 'Light Mode';
-
-    searchIcon.classList.replace('search-bar__icon--light', 'search-bar__icon--dark');
-  } else {
-    themeButtonIcon.classList.replace('theme-button__icon--dark', 'theme-button__icon--light');
-    themeButtonText.textContent = 'Dark Mode';
-
-    searchIcon.classList.replace('search-bar__icon--dark', 'search-bar__icon--light');
-  }
-
   document.body.classList.toggle('light-mode');
 }

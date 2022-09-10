@@ -14,6 +14,10 @@
 
   --inline-pad: 1.5em;
 
+  --icon-back: url('./icons/arrow_back_white.svg');
+  --icon-theme: url('./icons/sun-white.svg');
+  --icon-search: url("./icons/magnifying-glass-white.svg");
+
   --fw-thin: 300;
   --fw-regular: 600;
   --fw-bold: 800;
@@ -64,6 +68,10 @@ button {
 
   --border-shadow: 0 0 0.8em 0.4em hsl(0deg 0% 0% / 4%);
   --border-shadow_hover: 0 0 0.2em 0.2em hsl(0deg 0% 0% / 8%);
+
+  --icon-back: url('./icons/arrow_back_black.svg');
+  --icon-theme: url('./icons/moon-black.svg');
+  --icon-search: url('./icons/magnifying-glass-black.svg');
 }
 
 body {
@@ -116,17 +124,7 @@ body {
   width: var(--area-size);
   height: var(--area-size);
 
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: var(--icon-size);
-}
-
-.theme-button__icon--dark {
-  background-image: url('./icons/sun-solid.svg');
-}
-
-.theme-button__icon--light {
-  background-image: url('./icons/moon-solid.svg');
+  background: no-repeat center/var(--icon-size) var(--icon-theme);
 }
 
 .theme-button__text {
@@ -174,17 +172,7 @@ body {
   width: var(--area-size);
   height: var(--area-size);
 
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: var(--icon-size);
-}
-
-.search-bar__icon--dark {
-  background-image: url("./icons/magnifying-glass-solid.svg");
-}
-
-.search-bar__icon--light {
-  background-image: url('./icons/magnifying-glass-solid-dark.svg');
+  background: no-repeat center/var(--icon-size) var(--icon-search);
 }
 
 .search-bar__input {
@@ -279,10 +267,14 @@ body {
 /* Card details */
 
 .back-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+
+  box-shadow: var(--border-shadow);
   margin-bottom: var(--inline-pad);
   border: none;
   border-radius: var(--border-radius-normal);
-  box-shadow: var(--border-shadow);
   padding: 0.5em var(--inline-pad);
 
   font: var(--fs-normal) inherit;
@@ -296,18 +288,19 @@ body {
   background-color: var(--bg-component_hover);
 }
 
-.back-button>span {
-  display: inline-block;
-  vertical-align: middle;
-
+.back-button__icon {
+  --icon-size: 1.5em;
   --size: 16rem;
-  background-image: url('./icons/arrow_back_FILL0_wght400_GRAD0_opsz48.svg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
+
+  display: block;
+
   width: var(--size);
   height: var(--size);
+
+  background: no-repeat center/var(--icon-size) var(--icon-back);
 }
+
+.back-button__icon--light {}
 
 .card-details-container {
   padding: var(--inline-pad);
