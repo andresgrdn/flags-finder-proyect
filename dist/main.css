@@ -14,6 +14,9 @@
 
   --inline-pad: 1.5em;
 
+  --desktop-card-width: 300px;
+  --mobile-card-width: 100%;
+
   --icon-back: url('./icons/arrow_back_white.svg');
   --icon-theme: url('./icons/sun-white.svg');
   --icon-search: url('./icons/magnifying-glass-white.svg');
@@ -221,9 +224,9 @@ body {
 
 .cards-container {
   display: grid;
-
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2.8em;
+  justify-content: space-evenly;
+  grid-template-columns: repeat(auto-fill, var(--desktop-card-width));
+  gap: 2.8em 1em;
 
   padding: var(--inline-pad);
 }
@@ -428,7 +431,7 @@ body {
 
 @media (max-width: 640px) {
   .cards-container {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(auto-fill, var(--mobile-card-width));
   }
 }
 
