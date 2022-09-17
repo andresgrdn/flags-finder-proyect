@@ -180,28 +180,6 @@ function renderCardDescription(event) {
   openCountryDescription();
 }
 
-function searchByName(data, query) {
-  const lowerCaseQuery = query.toLowerCase();
-
-  const result = data.filter(country => {
-    return country.name.official.toLowerCase()
-      .includes(lowerCaseQuery);
-  });
-
-  return result;
-}
-
-function filterByRegion(data, query) {
-  const lowerCaseQuery = query.toLowerCase();
-
-  const result = data.filter(country => {
-    return country.region.toLowerCase()
-      .includes(lowerCaseQuery);
-  });
-
-  return result;
-}
-
 function searchByCCA3(data, query) {
   const lowerCaseQuery = query.toLowerCase();
 
@@ -214,7 +192,7 @@ function searchByCCA3(data, query) {
 }
 
 function renderSearchResult() {
-  const countriesFound = searchByName(countriesData, searchInput.value);
+  const countriesFound = search(countriesData, searchInput.value, regionSelect.value);
   const isNoResult = countriesFound.length === 0;
 
   if (isNoResult) {
@@ -227,8 +205,11 @@ function renderSearchResult() {
 }
 
 function renderFilterResult() {
-  const region = regionSelect.options[regionSelect.selectedIndex].value;
-  const filteredCountries = filterByRegion(countriesData, region);
+  const filteredCountries = search(
+    countriesData,
+    searchInput.value,
+    regionSelect.value
+  );
   const isNoResult = filteredCountries.length === 0;
 
   if (isNoResult) {
@@ -242,4 +223,20 @@ function renderFilterResult() {
 
 function changeTheme() {
   document.body.classList.toggle('light-mode');
+}
+
+function search(data = [], query = '', filter = '') {
+  let result = data;
+
+  if (filter) {
+    result = data.filter(country => country.region.toLowerCase() === filter);
+  }
+
+  if (query) {
+    result = result.filter(country => {
+      return country.name.official.toLowerCase().includes(query)
+    });
+  }
+
+  return result;
 }
