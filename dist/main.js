@@ -34,8 +34,8 @@ const backButtonIcon = document.querySelector('.back-button__icon');
 let countriesData;
 
 themeButton.addEventListener('click', changeTheme);
-searchInput.addEventListener('input', renderSearchResult);
-regionSelect.addEventListener('change', renderFilterResult);
+searchInput.addEventListener('input', renderResult);
+regionSelect.addEventListener('change', renderResult);
 backButton.addEventListener('click', showHome);
 
 firstCardsRender();
@@ -152,7 +152,7 @@ function searchByCCA3(data, query) {
   return result;
 }
 
-function renderSearchResult() {
+function renderResult() {
   const countriesFound = search(countriesData, searchInput.value, regionSelect.value);
   const isNoResult = countriesFound.length === 0;
 
@@ -162,23 +162,6 @@ function renderSearchResult() {
   }
 
   const cards = getCards(countriesFound);
-  cardsContainer.replaceChildren(...cards);
-}
-
-function renderFilterResult() {
-  const filteredCountries = search(
-    countriesData,
-    searchInput.value,
-    regionSelect.value
-  );
-  const isNoResult = filteredCountries.length === 0;
-
-  if (isNoResult) {
-    cardsContainer.innerHTML = `No results found...`;
-    return;
-  }
-
-  const cards = getCards(filteredCountries);
   cardsContainer.replaceChildren(...cards);
 }
 
