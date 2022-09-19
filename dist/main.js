@@ -82,7 +82,7 @@ function cardDescription(
 
       <div class="left-section">
         <p>Native Name: <span>${countyNativeName}</span></p>
-        <p>Population: <span>${population}</span></p>
+        <p>Population: <span>${population.toLocaleString()}</span></p>
         <p>Region: <span>${region}</span></p>
         <p>Sub Region: <span>${subRegion}</span></p>
         <p>Capital: <span>${capital}</span></p>
@@ -212,7 +212,7 @@ function getCards(countries = []) {
     const capital = document.createElement('p');
 
     name.textContent = country.name.official;
-    population.innerHTML = `<span>Population:</span> ${country.population}`;
+    population.innerHTML = `<span>Population:</span> ${country.population.toLocaleString()}`;
     region.innerHTML = `<span>Region:</span> ${country.region}`;
     capital.innerHTML = `<span>Capital:</span> ${country.capital}`;
 
