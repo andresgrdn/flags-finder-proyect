@@ -205,6 +205,7 @@ function getCards(countries = []) {
     image.classList.add('card__img');
     image.setAttribute('src', country.flags.png);
     image.setAttribute('alt', `${country.name.official} flag`);
+    image.setAttribute('loading', 'lazy');
 
     info.classList.add('card__info');
 
