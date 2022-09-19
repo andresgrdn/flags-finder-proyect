@@ -42,35 +42,10 @@ firstCardsRender();
 
 async function firstCardsRender() {
   countriesData = await getData();
-  const cards = buildCards(countriesData);
+  const cards = getCards(countriesData);
 
   cardsContainer.append(...cards);
 }
-
-function card(flagImage, flagName, population, region, capital) {
-  const classes = ['card'];
-  const container = document.createElement('div');
-  const view = `
-    <picture>
-      <img class="card__img" src="${flagImage}" alt="${flagName} flag">
-    </picture>
-    
-    <div class="card__info">
-      <h2>${flagName}</h2>
-      <p><span>Population:</span> ${population}</p>
-      <p><span>Region:</span> ${region}</p>
-      <p><span>Capital:</span> ${capital}</p>
-    </div>
-  `;
-
-  container.countryName = flagName;
-  container.classList.add(...classes);
-  container.innerHTML = view;
-
-  container.addEventListener('click', renderCardDescription);
-
-  return container;
-};
 
 function openCountryDescription() {
   toggle(cardDetailsContainer, 'hide');
@@ -82,20 +57,6 @@ function showHome() {
   toggle(cardDetailsContainer, 'hide');
   toggle(searchContainer, 'hide');
   toggle(cardsContainer, 'hide');
-}
-
-function buildCards(countriesData) {
-  const cardsHTML = countriesData.map(country => {
-    return card(
-      country.flags.png,
-      country.name.official,
-      country.population,
-      country.region,
-      country.capital
-    );
-  });
-
-  return cardsHTML;
 }
 
 function cardDescription(
@@ -200,7 +161,7 @@ function renderSearchResult() {
     return;
   }
 
-  const cards = buildCards(countriesFound);
+  const cards = getCards(countriesFound);
   cardsContainer.replaceChildren(...cards);
 }
 
@@ -217,7 +178,7 @@ function renderFilterResult() {
     return;
   }
 
-  const cards = buildCards(filteredCountries);
+  const cards = getCards(filteredCountries);
   cardsContainer.replaceChildren(...cards);
 }
 
@@ -239,4 +200,45 @@ function search(data = [], query = '', filter = '') {
   }
 
   return result;
+}
+
+function getCards(countries = []) {
+  const cards = [];
+
+  for (const country of countries) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.countryName = country.name.official;
+    card.addEventListener('click', renderCardDescription);
+
+    const imageContainer = document.createElement('picture');
+
+    const image = document.createElement('img');
+    image.classList.add('card__img');
+    image.setAttribute('src', country.flags.png);
+    image.setAttribute('alt', `${country.name.official} flag`);
+
+    imageContainer.appendChild(image);
+
+    const info = document.createElement('div');
+    info.classList.add('card__info');
+
+    const name = document.createElement('h2');
+    const population = document.createElement('p');
+    const region = document.createElement('p');
+    const capital = document.createElement('p');
+
+    name.textContent = country.name.official;
+    population.innerHTML = `<span>Population:</span> ${country.population}`;
+    region.innerHTML = `<span>Region:</span> ${country.region}`;
+    capital.innerHTML = `<span>Capital:</span> ${country.capital}`;
+
+    info.append(name, population, region, capital);
+
+    card.append(imageContainer, info);
+
+    cards.push(card);
+  }
+
+  return cards;
 }
