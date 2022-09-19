@@ -190,34 +190,31 @@ function getCards(countries = []) {
 
   for (const country of countries) {
     const card = document.createElement('div');
-    card.classList.add('card');
-    card.countryName = country.name.official;
-    card.addEventListener('click', renderCardDescription);
-
     const imageContainer = document.createElement('picture');
-
     const image = document.createElement('img');
-    image.classList.add('card__img');
-    image.setAttribute('src', country.flags.png);
-    image.setAttribute('alt', `${country.name.official} flag`);
-
-    imageContainer.appendChild(image);
-
     const info = document.createElement('div');
-    info.classList.add('card__info');
-
     const name = document.createElement('h2');
     const population = document.createElement('p');
     const region = document.createElement('p');
     const capital = document.createElement('p');
+
+    card.classList.add('card');
+    card.countryName = country.name.official;
+    card.addEventListener('click', renderCardDescription);
+
+    image.classList.add('card__img');
+    image.setAttribute('src', country.flags.png);
+    image.setAttribute('alt', `${country.name.official} flag`);
+
+    info.classList.add('card__info');
 
     name.textContent = country.name.official;
     population.innerHTML = `<span>Population:</span> ${country.population.toLocaleString()}`;
     region.innerHTML = `<span>Region:</span> ${country.region}`;
     capital.innerHTML = `<span>Capital:</span> ${country.capital}`;
 
+    imageContainer.appendChild(image);
     info.append(name, population, region, capital);
-
     card.append(imageContainer, info);
 
     cards.push(card);
