@@ -59,95 +59,99 @@ function showHome() {
   toggle(cardsContainer, 'hide');
 }
 
-function cardDescription(
-  flagImage,
-  countryName,
-  countyNativeName,
-  population,
-  region,
-  subRegion,
-  capital,
-  topDomain,
-  currencies,
-  languages,
-  borderCountries = []) {
-  const container = document.createElement('div');
-  container.classList.add('details-container');
+function renderDescription(event) {
+  const card = event.currentTarget;
 
-  const view = `
-    <img class="card__img" src="${flagImage}" alt="${countryName}">
-
-    <div class="card__details">
-      <h2 class="card__title">${countryName}</h2>
-
-      <div class="left-section">
-        <p>Native Name: <span>${countyNativeName}</span></p>
-        <p>Population: <span>${population.toLocaleString()}</span></p>
-        <p>Region: <span>${region}</span></p>
-        <p>Sub Region: <span>${subRegion}</span></p>
-        <p>Capital: <span>${capital}</span></p>
-      </div>
-
-      <div class="right-section">
-        <p>Top Level Domain: <span>${topDomain}</span></p>
-        <p>Currencies: <span>${currencies}</span></p>
-        <p>Languages: <span>${languages}</span></p>
-      </div>
-
-      <div class="bottom-section">
-        <p>Border Countries:</p>
-        <ul class="countries-links">
-          ${(borderCountries.map(country => {
-    return searchByCCA3(countriesData, country)
-  })).join(' ')}
-          <li><button type="button">France</button></li>
-        </ul>
-      </div>
-    </div>
-  `;
-
-  container.innerHTML = view;
-
-  return container;
-}
-
-function renderCardDescription(event) {
-  const container = event.currentTarget;
-
-  const countryInfo = countriesData.find(country => {
-    return country.name.official === container.countryName;
+  const country = countriesData.find(country => {
+    return country.name.official === card.name;
   });
 
-  const newCardDescription = cardDescription(
-    countryInfo.flags.png,
-    countryInfo.name.official,
-    countryInfo.name.common,
-    countryInfo.population,
-    countryInfo.region,
-    countryInfo.subregion,
-    countryInfo.capital,
-    countryInfo.tld,
-    countryInfo.currencies,
-    countryInfo.languages,
-    countryInfo.borders
-  );
+  const description = document.createElement('div');
+  const flagImage = document.createElement('img');
+  const infoContainer = document.createElement('div');
+  const name = document.createElement('h2');
+  const leftSection = document.createElement('div');
+  const nativeName = document.createElement('p');
+  const population = document.createElement('p');
+  const region = document.createElement('p');
+  const subRegion = document.createElement('p');
+  const capital = document.createElement('p');
+  const rightSection = document.createElement('div');
+  const topLevelDomain = document.createElement('p');
+  const currencies = document.createElement('p');
+  const languages = document.createElement('p');
+  const bottomSection = document.createElement('div');
+  const borderCountriesLabel = document.createElement('p');
+  const borderCountriesLinks = document.createElement('ul');
+
+  description.classList.add('details-container');
+  flagImage.classList.add('card__img');
+  flagImage.setAttribute('src', country.flags.png);
+  flagImage.setAttribute('alt', `${country.name.official} flag`);
+
+  infoContainer.classList.add('card__details');
+  name.classList.add('card__title');
+  name.textContent = country.name.official;
+
+  leftSection.classList.add('left-section');
+  nativeName.innerHTML = `Native Name: <span>${country.name.common}</span>`;
+  population.innerHTML = `Population: <span>${country.population.toLocaleString()}</span>`;
+  region.innerHTML = `Region: <span>${country.region}</span>`;
+  subRegion.innerHTML = `Sub Region: <span>${country.subregion}</span>`;
+  capital.innerHTML = `Capital: <span>${country.capital}</span>`;
+
+  rightSection.classList.add('right-section');
+  topLevelDomain.innerHTML = `Top Level Domain: <span>${country.tld}</span>`;
+  currencies.innerHTML = `Currencies: <span>${country.currencies}</span>`;
+  languages.innerHTML = `Languages: <span>${country.languages}</span>`;
+
+  bottomSection.classList.add('bottom-section');
+  borderCountriesLabel.textContent = 'Border Countries:';
+  borderCountriesLinks.classList.add('countries-links');
+
+  /* Border links */
+
+  const borders = searchByCCA3(countriesData, country.borders);
+
+  borders.forEach(border => {
+    const borderContainer = document.createElement('li');
+    const borderButton = document.createElement('button');
+
+    borderButton.name = country.name.official;
+    borderButton.setAttribute('type', 'button');
+    borderButton.textContent = border.name.common;
+    borderButton.addEventListener('click', renderDescription);
+
+    borderContainer.appendChild(borderButton);
+    borderCountriesLinks.appendChild(borderContainer);
+  })
+
+  /* Border links */
+
+  description.append(flagImage, infoContainer);
+
+  infoContainer.append(name, leftSection, rightSection, bottomSection);
+
+  leftSection.append(nativeName, population, region, subRegion, capital);
+  rightSection.append(topLevelDomain, currencies, languages);
+  bottomSection.append(borderCountriesLabel, borderCountriesLinks);
 
   if (cardDetailsContainer.childElementCount > 1) {
-    cardDetailsContainer.lastElementChild.replaceWith(newCardDescription);
+    cardDetailsContainer.lastElementChild.replaceWith(description);
   } else {
-    cardDetailsContainer.appendChild(newCardDescription);
+    cardDetailsContainer.appendChild(description);
   }
 
   openCountryDescription();
 }
 
-function searchByCCA3(data, query) {
-  const lowerCaseQuery = query.toLowerCase();
-
-  const result = data.filter(country => {
-    return country.cca3.toLowerCase()
-      .includes(lowerCaseQuery);
-  });
+function searchByCCA3(data = [], cca3Array = []) {
+  const result = cca3Array.map(cca3 => {
+    const cca3Found = data.find(country => {
+      return country.cca3.toLowerCase() === cca3.toLowerCase();
+    })
+    return cca3Found;
+  })
 
   return result;
 }
@@ -199,8 +203,8 @@ function getCards(countries = []) {
     const capital = document.createElement('p');
 
     card.classList.add('card');
-    card.countryName = country.name.official;
-    card.addEventListener('click', renderCardDescription);
+    card.name = country.name.official;
+    card.addEventListener('click', renderDescription);
 
     image.classList.add('card__img');
     image.setAttribute('src', country.flags.png);
