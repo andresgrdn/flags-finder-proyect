@@ -102,8 +102,20 @@ function renderDescription(event) {
 
   rightSection.classList.add('right-section');
   topLevelDomain.innerHTML = `Top Level Domain: <span>${country.tld}</span>`;
-  currencies.innerHTML = `Currencies: <span>${country.currencies}</span>`;
-  languages.innerHTML = `Languages: <span>${country.languages}</span>`;
+
+  const currNames = Object.entries(country.currencies);
+  const currArray = [];
+  currNames.forEach(currName => {
+    currArray.push(`<span>${currName[1].symbol} ${currName[0]} ${currName[1].name}</span>`);
+  })
+  currencies.innerHTML = `Currencies: ${currArray.join(', ')}`;
+
+  const langNames = Object.entries(country.languages);
+  const langArray = [];
+  langNames.forEach(langName => {
+    langArray.push(`<span>${langName[0]} ${langName[1]}</span>`);
+  })
+  languages.innerHTML = `Languages: ${langArray.join(', ')}`;
 
   bottomSection.classList.add('bottom-section');
   borderCountriesLabel.textContent = 'Border Countries:';
