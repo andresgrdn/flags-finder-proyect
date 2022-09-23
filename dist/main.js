@@ -194,7 +194,7 @@ function search(data = [], query = '', filter = '') {
 
   if (query) {
     result = result.filter(country => {
-      return country.name.official.toLowerCase().includes(query)
+      return country.name.official.toLowerCase().includes(query.toLowerCase())
     });
   }
 
