@@ -48,9 +48,10 @@ async function firstCardsRender() {
 }
 
 function openCountryDescription() {
-  toggle(cardDetailsContainer, 'hide');
-  toggle(searchContainer, 'hide');
-  toggle(cardsContainer, 'hide');
+  searchContainer.classList.add('hide');
+  cardsContainer.classList.add('hide');
+
+  cardDetailsContainer.classList.remove('hide');
 }
 
 function showHome() {
@@ -129,7 +130,7 @@ function renderDescription(event) {
     const borderContainer = document.createElement('li');
     const borderButton = document.createElement('button');
 
-    borderButton.name = country.name.official;
+    borderButton.name = border.name.official;
     borderButton.setAttribute('type', 'button');
     borderButton.textContent = border.name.common;
     borderButton.addEventListener('click', renderDescription);
