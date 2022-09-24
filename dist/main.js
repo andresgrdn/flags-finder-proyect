@@ -119,7 +119,7 @@ function renderDescription(event) {
   languages.innerHTML = `Languages: ${langArray.join(', ')}`;
 
   bottomSection.classList.add('bottom-section');
-  borderCountriesLabel.textContent = 'Border Countries:';
+  borderCountriesLabel.textContent = country.borders ? 'Border Countries:' : '';
   borderCountriesLinks.classList.add('countries-links');
 
   /* Border links */
