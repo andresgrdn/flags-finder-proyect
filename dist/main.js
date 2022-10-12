@@ -13,10 +13,6 @@ async function getData() {
   }
 }
 
-function toggle(element, style) {
-  element.classList.toggle(style);
-}
-
 /* Main logic */
 
 const cardsContainer = document.querySelector('.cards-container');
@@ -55,84 +51,87 @@ function openCountryDescription() {
 }
 
 function showHome() {
-  toggle(cardDetailsContainer, 'hide');
-  toggle(searchContainer, 'hide');
-  toggle(cardsContainer, 'hide');
+  cardDetailsContainer.classList.add('hide');
+
+  searchContainer.classList.remove('hide');
+  cardsContainer.classList.remove('hide');
+
 }
 
 function renderDescription(event) {
   const card = event.currentTarget;
-
-  const country = countriesData.find(country => {
-    return country.name.official === card.name;
-  });
+  const country = countriesData.find(country => country.name.official === card.name);
+  const { flags, name, population, region, subregion,
+    capital, tld, currencies, languages, borders } = country;
 
   const description = document.createElement('div');
   const flagImage = document.createElement('img');
   const infoContainer = document.createElement('div');
-  const name = document.createElement('h2');
+  const nameElement = document.createElement('h2');
   const leftSection = document.createElement('div');
   const nativeName = document.createElement('p');
-  const population = document.createElement('p');
-  const region = document.createElement('p');
-  const subRegion = document.createElement('p');
-  const capital = document.createElement('p');
+  const populationElement = document.createElement('p');
+  const regionElement = document.createElement('p');
+  const subRegionElement = document.createElement('p');
+  const capitalElement = document.createElement('p');
   const rightSection = document.createElement('div');
   const topLevelDomain = document.createElement('p');
-  const currencies = document.createElement('p');
-  const languages = document.createElement('p');
+  const currenciesElement = document.createElement('p');
+  const languagesElement = document.createElement('p');
   const bottomSection = document.createElement('div');
   const borderCountriesLabel = document.createElement('p');
   const borderCountriesLinks = document.createElement('ul');
 
   description.classList.add('details-container');
   flagImage.classList.add('card__img');
-  flagImage.setAttribute('src', country.flags.png);
-  flagImage.setAttribute('alt', `${country.name.official} flag`);
+  flagImage.setAttribute('src', flags.png);
+  flagImage.setAttribute('alt', `${name.official} flag`);
 
   infoContainer.classList.add('card__details');
-  name.classList.add('card__title');
-  name.textContent = country.name.official;
+  nameElement.classList.add('card__title');
+  nameElement.textContent = name.official;
 
   leftSection.classList.add('left-section');
-  nativeName.innerHTML = `Native Name: <span>${country.name.common}</span>`;
-  population.innerHTML = `Population: <span>${country.population.toLocaleString()}</span>`;
-  region.innerHTML = `Region: <span>${country.region}</span>`;
-  subRegion.innerHTML = `Sub Region: <span>${country.subregion}</span>`;
-  capital.innerHTML = `Capital: <span>${country.capital}</span>`;
+  nativeName.innerHTML = `Native Name: <span>${name.common}</span>`;
+  populationElement.innerHTML = `Population: <span>${population.toLocaleString()}</span>`;
+  regionElement.innerHTML = `Region: <span>${region}</span>`;
+  subRegionElement.innerHTML = `Sub Region: <span>${subregion}</span>`;
+  capitalElement.innerHTML = `Capital: <span>${capital}</span>`;
 
   rightSection.classList.add('right-section');
-  topLevelDomain.innerHTML = `Top Level Domain: <span>${country.tld}</span>`;
+  topLevelDomain.innerHTML = `Top Level Domain: <span>${tld}</span>`;
 
-  const currNames = Object.entries(country.currencies);
+  const currNames = Object.entries(currencies);
   const currArray = [];
   currNames.forEach(currName => {
     currArray.push(`<span>${currName[1].symbol} ${currName[0]} ${currName[1].name}</span>`);
   })
-  currencies.innerHTML = `Currencies: ${currArray.join(', ')}`;
+  currenciesElement.innerHTML = `Currencies: ${currArray.join(', ')}`;
 
-  const langNames = Object.entries(country.languages);
+  const langNames = Object.entries(languages);
   const langArray = [];
   langNames.forEach(langName => {
     langArray.push(`<span>${langName[0]} ${langName[1]}</span>`);
   })
-  languages.innerHTML = `Languages: ${langArray.join(', ')}`;
+  languagesElement.innerHTML = `Languages: ${langArray.join(', ')}`;
 
   bottomSection.classList.add('bottom-section');
-  borderCountriesLabel.textContent = country.borders ? 'Border Countries:' : '';
+  borderCountriesLabel.textContent = borders ? 'Border Countries:' : '';
   borderCountriesLinks.classList.add('countries-links');
 
   /* Border links */
 
-  const borders = searchByCCA3(countriesData, country.borders);
+  const bordersData = searchByCCA3(countriesData, borders);
 
-  borders.forEach(border => {
+  bordersData.forEach(border => {
+    const { name } = border;
+
     const borderContainer = document.createElement('li');
     const borderButton = document.createElement('button');
 
-    borderButton.name = border.name.official;
+    borderButton.name = name.official;
     borderButton.setAttribute('type', 'button');
-    borderButton.textContent = border.name.common;
+    borderButton.textContent = name.common;
     borderButton.addEventListener('click', renderDescription);
 
     borderContainer.appendChild(borderButton);
@@ -143,10 +142,10 @@ function renderDescription(event) {
 
   description.append(flagImage, infoContainer);
 
-  infoContainer.append(name, leftSection, rightSection, bottomSection);
+  infoContainer.append(nameElement, leftSection, rightSection, bottomSection);
 
-  leftSection.append(nativeName, population, region, subRegion, capital);
-  rightSection.append(topLevelDomain, currencies, languages);
+  leftSection.append(nativeName, populationElement, regionElement, subRegionElement, capitalElement);
+  rightSection.append(topLevelDomain, currenciesElement, languagesElement);
   bottomSection.append(borderCountriesLabel, borderCountriesLinks);
 
   if (cardDetailsContainer.childElementCount > 1) {
@@ -206,36 +205,38 @@ function getCards(countries = []) {
   const cards = [];
 
   for (const country of countries) {
-    const card = document.createElement('div');
-    const imageContainer = document.createElement('picture');
-    const image = document.createElement('img');
-    const info = document.createElement('div');
-    const name = document.createElement('h2');
-    const population = document.createElement('p');
-    const region = document.createElement('p');
-    const capital = document.createElement('p');
+    const { name, flags, population, region, capital } = country;
 
-    card.classList.add('card');
-    card.name = country.name.official;
-    card.addEventListener('click', renderDescription);
+    const cardElement = document.createElement('div');
+    const imageContainerElement = document.createElement('picture');
+    const imageElement = document.createElement('img');
+    const infoElement = document.createElement('div');
+    const nameElement = document.createElement('h2');
+    const populationElement = document.createElement('p');
+    const regionElement = document.createElement('p');
+    const capitalElement = document.createElement('p');
 
-    image.classList.add('card__img');
-    image.setAttribute('src', country.flags.png);
-    image.setAttribute('alt', `${country.name.official} flag`);
-    image.setAttribute('loading', 'lazy');
+    cardElement.classList.add('card');
+    cardElement.name = name.official;
+    cardElement.addEventListener('click', renderDescription);
 
-    info.classList.add('card__info');
+    imageElement.classList.add('card__img');
+    imageElement.setAttribute('src', flags.png);
+    imageElement.setAttribute('alt', `${name.official} flag`);
+    imageElement.setAttribute('loading', 'lazy');
 
-    name.textContent = country.name.official;
-    population.innerHTML = `<span>Population:</span> ${country.population.toLocaleString()}`;
-    region.innerHTML = `<span>Region:</span> ${country.region}`;
-    capital.innerHTML = `<span>Capital:</span> ${country.capital}`;
+    infoElement.classList.add('card__info');
 
-    imageContainer.appendChild(image);
-    info.append(name, population, region, capital);
-    card.append(imageContainer, info);
+    nameElement.textContent = name.official;
+    populationElement.innerHTML = `<span>Population:</span> ${population.toLocaleString()}`;
+    regionElement.innerHTML = `<span>Region:</span> ${region}`;
+    capitalElement.innerHTML = `<span>Capital:</span> ${capital}`;
 
-    cards.push(card);
+    imageContainerElement.appendChild(imageElement);
+    infoElement.append(nameElement, populationElement, regionElement, capitalElement);
+    cardElement.append(imageContainerElement, infoElement);
+
+    cards.push(cardElement);
   }
 
   return cards;
