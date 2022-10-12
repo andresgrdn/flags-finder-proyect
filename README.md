@@ -16,8 +16,6 @@ This is a solution to the [REST Countries API with color theme switcher challeng
 - [Author](#author)
 - [Acknowledgments](#acknowledgments)
 
-**Note: Delete this note and update the table of contents based on what sections you keep.**
-
 ## Overview
 
 ### The challenge
@@ -33,35 +31,20 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
-
-Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
-
-Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it. 
-
-Then crop/optimize/edit your image however you like, add it to your project, and update the file path in the image above.
-
-**Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
+![](./design/screenshots/flags-finder-500x253-optimized.gif)
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Solution URL: [https://github.com/andresgrdn/rest-countries-api-with-color-theme-switcher](https://github.com/andresgrdn/rest-countries-api-with-color-theme-switcher#overview)
+- Live Site URL: [https://flags-finder.netlify.app/](https://flags-finder.netlify.app/)
 
 ## My process
 
 ### Built with
 
 - Semantic HTML5 markup
-- CSS custom properties
-- Flexbox
-- CSS Grid
 - Mobile-first workflow
-- [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
-
-**Note: These are just examples. Delete this note and replace the list above with your own choices**
+- For the styles I used pure CSS
 
 ### What I learned
 
@@ -87,12 +70,6 @@ If you want more help with writing markdown, we'd recommend checking out [The Ma
 
 **Note: Delete this note and the content within this section and replace with your own learnings.**
 
-### Continued development
-
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
-
-**Note: Delete this note and the content within this section and replace with your own plans for continued development.**
-
 ### Useful resources
 - [Select element | WhatWC website](https://html.spec.whatwg.org/multipage/form-elements.html#the-select-element)
 - [Select element | MDN website](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select)
@@ -103,11 +80,3 @@ Use this section to outline areas that you want to continue focusing on in futur
 - Website - [andresgrdn.github.io](https://andresgrdn.github.io)
 - Frontend Mentor - [@andresgrdn](https://www.frontendmentor.io/profile/andresgrdn)
 - Twitter - [@andresgrdn](https://www.twitter.com/andresgrdn)
-
-**Note: Delete this note and add/remove/edit lines above based on what links you'd like to share.**
-
-## Acknowledgments
-
-This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
-
-**Note: Delete this note and edit this section's content as necessary. If you completed this challenge by yourself, feel free to delete this section entirely.**
