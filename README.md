@@ -48,27 +48,30 @@ Users should be able to:
 
 ### What I learned
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
+By making the seek bar I learned how to iterate over objects and arrays. It's something really cool, first we must understand very well the object that we get from the api; that's the tricky part, but when I knew what the country array looked like inside, I used array and object methods to separate the data for each country and create a unique card.
 
-To see how you can add code snippets, see below:
-
-```html
-<h1>Some HTML code I'm proud of</h1>
-```
-```css
-.proud-of-this-css {
-  color: papayawhip;
-}
-```
 ```js
-const proudOfThisFunc = () => {
-  console.log('🎉')
+function getCards(countries = []) {
+  const cards = [];
+  for (const country of countries) {
+    const { name, flags, population, region, capital } = country;
+    const cardElement = document.createElement('div');
+    <!--clipped code--> // card dom creation from api data
+    cards.push(cardElement);
+  }
+  return cards;
 }
 ```
-
-If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
-
-**Note: Delete this note and the content within this section and replace with your own learnings.**
+This was a tricky part.
+```js
+ const langNames = Object.entries(languages);
+  const langArray = [];
+  langNames.forEach(langName => {
+    langArray.push(`<span>${langName[0]} ${langName[1]}</span>`);
+  })
+  languagesElement.innerHTML = `Languages: ${langArray.join(', ')}`;
+```
+Finally, the key part in this project was to separate the code into different parts. It makes code easier to read and much easier to think of new answers to new problems.
 
 ### Useful resources
 - [Select element | WhatWC website](https://html.spec.whatwg.org/multipage/form-elements.html#the-select-element)
