@@ -1,6 +1,6 @@
 /* Helpers */
 
-const API = 'https://restcountries.com/v3.1/';
+const API = 'https://restcountries.com/v3.1';
 
 async function getData() {
   try {
